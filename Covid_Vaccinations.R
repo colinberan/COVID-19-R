@@ -39,18 +39,18 @@ df_total_vaccinations %>%
 #Let's take a look at vaccinations per hundred people to see how the percentages look.
 
 df_vacc_perc <- df %>%
-  select(country, iso_code, date, total_vaccinations_per_hundred) %>%
+  select(country, iso_code, date, people_vaccinated_per_hundred) %>%
   group_by(country) %>%
-  filter(!is.na(total_vaccinations_per_hundred)) %>%
-  filter(total_vaccinations_per_hundred == max(total_vaccinations_per_hundred)) %>%
+  filter(!is.na(people_vaccinated_per_hundred)) %>%
+  filter(people_vaccinated_per_hundred == max(people_vaccinated_per_hundred)) %>%
   distinct(country, .keep_all = TRUE)
 
 #Plot of total vaccinations per hundred people for top 20 most vaccinated countries as of most recent update.
 df_vacc_perc %>%
-  arrange(desc(total_vaccinations_per_hundred)) %>%
+  arrange(desc(people_vaccinated_per_hundred)) %>%
   head(20) %>%
-  ggplot(aes(total_vaccinations_per_hundred, reorder(country, total_vaccinations_per_hundred))) + theme_minimal() + 
-  geom_col(aes(fill=total_vaccinations_per_hundred)) + geom_label(aes(label = total_vaccinations_per_hundred)) +
+  ggplot(aes(people_vaccinated_per_hundred, reorder(country, people_vaccinated_per_hundred))) + theme_minimal() + 
+  geom_col(aes(fill=people_vaccinated_per_hundred)) + geom_label(aes(label = people_vaccinated_per_hundred)) +
   labs(title = paste('Total Vaccination Percentage per Country as of', recent.date, sep = " "), y = '', x = 'Percentage of Population') +
   theme(legend.position = 'none')
 
